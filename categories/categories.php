@@ -135,16 +135,30 @@
 					}
 				}
 		}
+		
+		###indentation categorie fille en mode statique 
+		if (($this->plxMotor->aCats) && (	$this->plxMotor->mode === 'static')){	
+			#boucle sur les catégories
+			foreach(array_keys($this->plxMotor->aCats) as $array_key) {
+				#ajout espace blanc braille devant le nom de catégorie pour un effet visuel d'indentation à l'affichage
+					if($this->plxMotor->aCats[$array_key]['daughterOf'] !== '000') 	$this->plxMotor->aCats[$array_key]['name'] = '⠀'.$this->plxMotor->aCats[$array_key]['name'];	
+			}						
+		}
+
 		###################################################################################################################################################################################
 		#                                                                         ╔═════════════╗                                                                                         #
 		#                                                                         ║ DISCLAIMER: ║                                                                                         #
 		#                                                                         ╚═════════════╝                                                                                         #
-		#Pour le moment:version 0.2 du 26/03/2021 par GC-nomade AKA gcyrillus.                                                                                                            #
-		#Si au moins une catégorie mére a été trouvée, seuls les catégories contenant au moins un article et rattachées a la catégorie mere filtrée devrait etre affichée dans la sidebar.#
-		# => comportement avec une seule catégorie mother='1' ?                                                                                                                           #
-		# => categorie orphelines ?                                                                                                                                                       #
+		#Pour le moment:version 1 du 26/03/2021 par GC-nomade AKA gcyrillus, ce n'est plus une BETA.                                                                                      #
+		#Si au moins une catégorie mére a été trouvée, seuls les catégories contenant au moins un article et rattachées a(ux) la catégorie(s) mere filtrée(s) devrai(en)t etre affichée(s)#
+        # ...dans la sidebar.                                                                                                                                                             #
+		# pas toisé => comportement avec une seule catégorie mother='1' ?                                                                                                                 #
+		# pas toisé => categorie orphelines ?                                                                                                                                             #
 		# articles rattachés à une catégorie orpheline ?                                                                                                                                  #
-		#toutes suggestion sont les bienvenues, La programmation n'est pas mon domaine.                                                                                                   #
+		# pas toisé => toutes suggestion sont les bienvenues, La programmation n'est pas mon domaine.                                                                                     #  
+		# pas vu encore : filtrage des tags selon categorie(s) méres                                                                                                                      #
+		# compatibilité avec d'autre plugins ? => coté administration, les pages etant dans des repertoires differents,les editeurs WYSIWYG et autres peuvent eux mêmes avoir une ...     #
+		#    ...une configuration trop rigide concernant les liens vers leur composants respectifs.                                                                                       #
 		###################################################################################################################################################################################
 		
 			<?php
