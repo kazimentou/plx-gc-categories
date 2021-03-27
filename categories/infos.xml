@@ -2,9 +2,9 @@
 <document>
    <title>Categories mére et filles</title>
    <author>GC-Nomade</author>
-   <version>0.0 BETA 2</version>
+   <version>1.0</version>
    <date>26/03/2021</date>
     <site>https://re7net.com</site>
-    <repository>https://github.com/gcyrillus/plx-gc-categories/tree/master</repository>
-   <description>Plugin permettant de déclarer des catégories mere et filles. A développer :Tri des catégories affichées dans la sidebar en fonction de la catégorie mére d'un article ou d'une catégorie.</description>
+    <repository>https://github.com/gcyrillus/plx-gc-categories</repository>
+   <description>Plugin permettant de déclarer des catégories mere et filles. Dans la sidebar, seuls les categories soeurs et meres sont affichées, sauf en page home </description>
 </document>
