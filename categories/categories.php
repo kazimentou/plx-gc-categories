@@ -39,15 +39,12 @@
 		
             echo self::BEGIN_CODE;
 			?>	
-		if (($this->plxMotor->aCats) && (	$this->plxMotor->mode !== 'static')){	
-
+		if (($this->plxMotor->aCats) && ($this->plxMotor->mode !== 'static') ){	
 		
 					$currentCats = $this->catId(true);
 
-					if ($this->plxMotor->mode === 'home') $currentCats[]='';
-					
-					#debug affiche les catégories
-					#var_dump($currentCats);
+					if ($this->plxMotor->mode === 'home' ) $currentCats[]='';
+
 					
 					#Initialisation du tableau de la collection des numeros de categories a rechercher
 					$keySearch = array();
@@ -62,18 +59,13 @@
 					
 					#debug : recherche et affichage nombre catégories dans la collection					
 					$keySearchCount = count(array_column($keySearch, null));
-					#echo '<li style="color:tomato"> Num '.$keySearchCount.'</li>';
-				
-					#debug : affiche resultat recherche catégorie : soit 'xxx' ou 'xxx','xxx', ... si plusieurs
-					#echo '<li style="color:white">keySearch: ';
-					#		var_dump($keySearch);
-					#echo '</li>';
+
 						
 
 					#on verifie si c'est une page catègorie et si celle ci est mother ou daughter Of .
 					if(	$this->plxMotor->mode === 'categorie') {
 						if ($this->plxMotor->aCats[ $keySearch[0]]['daughterOf'] != '000'){
-							array_push($keySearch, $this->plxMotor->aCats[ $keySearch[0]]['daughterOf']);							 
+							array_push($keySearch,  $this->plxMotor->aCats[ $keySearch[0]]['daughterOf']);							 
 							array_push($cat_to_set, $this->plxMotor->aCats[ $keySearch[0]]['daughterOf']);
 						}
 						
@@ -85,10 +77,14 @@
 					#y aura t-il des soeurs ?
 					$sister='';
 					
-						if($keySearchCount === 1 ) {						
+					#on regarde si on est en preview et si l'on a plus d'une categorie soeur et on alimente le tableau.
+						if((!isset($_GET['preview'])) && ($keySearchCount === 1 )) {						
 								$sister= $this->plxMotor->aCats[ $keySearch[0]]['daughterOf'];
 								$cat_to_set[]=$sister;
-						}					
+						}
+						else {
+							$keySearch[]='000';
+						}							
 					
 					#boucle sur les catégories
 					foreach(array_keys($this->plxMotor->aCats) as $array_key) {
@@ -111,13 +107,7 @@
 								$okay=true;
 							}
 						
-						
-
-					
-						#--------------------------------------------------------------------------------#
-						#      recherche de valeur de clé correspondant a une valeur de $keySearch       #
-						#                pour alimenter la collection à l'affichage                      #
-						#--------------------------------------------------------------------------------#
+						#recherche de valeur de clé correspondant a une valeur de $keySearch  pour alimenter la collection à l'affichage     
 						foreach($keySearch as $keytest => $ask ) {													
 							if(preg_match("/\b$ask\b/i", $this->plxMotor->aCats[$array_key]['daughterOf'])){	
 									$cat_to_set[]=$array_key;				 
@@ -127,7 +117,7 @@
 					}
 
 				
-				#Si l'on a trouvé au moins une categories mere , faire le tri des categories à afficher , sinon on a bosser pour rien ! 
+				#Si l'on a trouvé au moins une categorie mere , faire le tri des categories à afficher , sinon on a bosser pour rien ! 
 				if($okay) {
 					$cat_to_remove = array_diff( $cats_found,$cat_to_set);
 					foreach($cat_to_remove as $unset) {
@@ -136,7 +126,7 @@
 				}
 		}
 		
-		###indentation categorie fille en mode statique 
+		#indentation visuel des categorie fille
 		if (($this->plxMotor->aCats) && (	$this->plxMotor->mode === 'static')){	
 			#boucle sur les catégories
 			foreach(array_keys($this->plxMotor->aCats) as $array_key) {
@@ -149,7 +139,7 @@
 		#                                                                         ╔═════════════╗                                                                                         #
 		#                                                                         ║ DISCLAIMER: ║                                                                                         #
 		#                                                                         ╚═════════════╝                                                                                         #
-		#Pour le moment:version 1 du 26/03/2021 par GC-nomade AKA gcyrillus, ce n'est plus une BETA.                                                                                      #
+		#Pour le moment:version 1 du 26/03/2021 par GC-nomade AKA gcyrillus.                                                                                  #
 		#Si au moins une catégorie mére a été trouvée, seuls les catégories contenant au moins un article et rattachées a(ux) la catégorie(s) mere filtrée(s) devrai(en)t etre affichée(s)#
         # ...dans la sidebar.                                                                                                                                                             #
 		# pas toisé => comportement avec une seule catégorie mother='1' ?                                                                                                                 #
@@ -157,8 +147,7 @@
 		# articles rattachés à une catégorie orpheline ?                                                                                                                                  #
 		# pas toisé => toutes suggestion sont les bienvenues, La programmation n'est pas mon domaine.                                                                                     #  
 		# pas vu encore : filtrage des tags selon categorie(s) méres                                                                                                                      #
-		# compatibilité avec d'autre plugins ? => coté administration, les pages etant dans des repertoires differents,les editeurs WYSIWYG et autres peuvent eux mêmes avoir une ...     #
-		#    ...une configuration trop rigide concernant les liens vers leur composants respectifs.                                                                                       #
+		# compatibilité avec d'autre plugins ? infos a remonté par les utilisateurs.                                                                                  #
 		###################################################################################################################################################################################
 		
 			<?php
