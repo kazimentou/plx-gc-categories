@@ -7,21 +7,13 @@
  * @author	Stephane F et Florent MONTHEL
  **/
 
-include __DIR__ .'/../../core/admin/prepend.php';
-
-# Control du token du formulaire
-plxToken::validateFormToken($_POST);
-
-# Hook Plugins
-#eval($plxAdmin->plxPlugins->callHook('AdminCategoriesPrepend'));
-
 # Control de l'accès à la page en fonction du profil de l'utilisateur connecté
 $plxAdmin->checkProfil(PROFIL_ADMIN, PROFIL_MANAGER, PROFIL_MODERATOR, PROFIL_EDITOR);
 
 # On édite les catégories
 if(!empty($_POST)) {
 	$plxAdmin->editCategories($_POST);
-	header('Location: plg_categories.php');
+	header('Location: categories.php');
 	exit;
 }
 
@@ -35,50 +27,19 @@ $aTri = array(
 );
 
 # On inclut le header
-include __DIR__ .'/../../core/admin/top.php';
-
+include 'top.php';
 ?>
-<style>
-tr{
-	--mother_001:#90EE90;
-	--daughterOf_001:#90EE90;
-	--mother_002:#ADD8E6;
-	--daughterOf_002:#ADD8E6;
-	--mother_003:#FFD700;
-	--daughterOf_003:#FFD700 ;
-	--mother_004:#FF6347;
-	--daughterOf_004:#FF6347 ;
-	--mother_005:#6856ba;
-	--daughterOf_005:#6856ba;
-	--mother_006:#e66043;
-	--daughterOf_006:#e66043;
-	--mother_007:#23f74a;
-	--daughterOf_007:#23f74a;
-	--mother_008:#069420;
-	--daughterOf_008:#069420;
-	--mother_009:#543dba;
-	--daughterOf_009:#543dba;
-	--mother_010:#2102ad;
-	--daughterOf_010:#2102ad;
- 	--mother_011:#2f7a3c;
-	--daughterOf_011:#2f7a3c;
-	--mother_012:#ff6f4f;
-	--daughterOf_012:#ff6f4f;
-	--mother_013:#065c16;
-	--daughterOf_013:#065c16;
-	--mother_014:#26913a;
-	--daughterOf_014:#26913a;
-}</style>
-<form action="" method="post" id="form_categories">
+
+<form method="post" id="form_categories">
 
 	<div class="inline-form action-bar">
-		<h2><?php echo L_CAT_TITLE ?></h2>
-		<p><a class="back" href="<?php echo PLX_ROOT ?>core/admin/index.php"><?php echo L_BACK_TO_ARTICLES ?></a></p>
+		<h2><?= L_CAT_TITLE ?></h2>
+		<p><a class="back" href="<?= PLX_ROOT ?>core/admin/index.php"><?= L_BACK_TO_ARTICLES ?></a></p>
 		<?php plxUtils::printSelect('selection', array( '' => L_FOR_SELECTION, 'delete' => L_DELETE), '', false, 'no-margin', 'id_selection') ?>
-		<input type="submit" name="submit" value="<?php echo L_OK ?>" onclick="return confirmAction(this.form, 'id_selection', 'delete', 'idCategory[]', '<?php echo L_CONFIRM_DELETE ?>')" />
-		<?php echo plxToken::getTokenPostMethod() ?>
+		<input type="submit" name="submit" value="<?= L_OK ?>" onclick="return confirmAction(this.form, 'id_selection', 'delete', 'idCategory[]', '<?= L_CONFIRM_DELETE ?>')" />
+		<?= plxToken::getTokenPostMethod() ?>
 		<span class="sml-hide med-show">&nbsp;&nbsp;&nbsp;</span>
-		<input type="submit" name="update" value="<?php echo L_CAT_APPLY_BUTTON ?>" />
+		<input type="submit" name="update" value="<?= L_CAT_APPLY_BUTTON ?>" />
 	</div>
 
 	<?php eval($plxAdmin->plxPlugins->callHook('AdminCategoriesTop')) # Hook Plugins ?>
@@ -86,20 +47,20 @@ tr{
 
 
 	<div class="scrollable-table">
-		<table id="categories-table" class="full-width" data-rows-num='name$="_ordre"'>
+		<table id="categories-table" class="full-width plg_table" data-rows-num='name$="_ordre"'>
 			<thead>
 				<tr>
 					<th class="checkbox"><input type="checkbox" onclick="checkAll(this.form, 'idCategory[]')" /></th>
-					<th><?php echo L_ID ?></th>
-					<th><?php echo L_CAT_LIST_NAME ?></th>
-					<th><?php echo L_CAT_LIST_URL ?></th>
-					<th>Mere</th>
-					<th>Fille</th>
-					<th><?php echo L_CAT_LIST_ACTIVE ?></th>
-					<th><?php echo L_CAT_LIST_SORT ?></th>
-					<th><?php echo L_CAT_LIST_BYPAGE ?></th>
-					<th data-id="order"><?php echo L_CAT_LIST_ORDER ?></th>
-					<th><?php echo L_CAT_LIST_MENU ?></th>
+					<th><?= L_ID ?></th>
+					<th><?= L_CAT_LIST_NAME ?></th>
+					<th><?= L_CAT_LIST_URL ?></th>
+					<th><?php echo $plgPlugin->lang('L_CAT_LIST_MOTHER'); ?></th>
+					<th><?php echo $plgPlugin->lang('L_CAT_LIST_DAUGHTER'); ?></th>
+					<th><?= L_CAT_LIST_ACTIVE ?></th>
+					<th><?= L_CAT_LIST_SORT ?></th>
+					<th><?= L_CAT_LIST_BYPAGE ?></th>
+					<th data-id="order"><?= L_CAT_LIST_ORDER ?></th>
+					<th><?= L_CAT_LIST_MENU ?></th>
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
@@ -146,7 +107,7 @@ tr{
 			$new_catid = str_pad($a['0']+1, 3, "0", STR_PAD_LEFT);
 			?>
 				<tr class="new">
-					<td colspan="2"><?php echo L_NEW_CATEGORY ?></td>
+					<td colspan="2"><?= L_NEW_CATEGORY ?></td>
 					<td>
 					<?php
 						echo '<input type="hidden" name="catNum[]" value="'.$new_catid.'" />';
@@ -181,6 +142,6 @@ tr{
 <?php
 # Hook Plugins
 eval($plxAdmin->plxPlugins->callHook('AdminCategoriesFoot'));
+
 # On inclut le footer
-include __DIR__ .'/../../core/admin/foot.php';
-?>
+include 'foot.php';

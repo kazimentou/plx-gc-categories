@@ -1,0 +1,38 @@
+.plg_table {
+	--mother_000:lightgray;
+	--mother_001:#90EE90;
+	--daughterOf_001:#90EE90;
+	--mother_002:#ADD8E6;
+	--daughterOf_002:#ADD8E6;
+	--mother_003:#FFD700;
+	--daughterOf_003:#FFD700 ;
+	--mother_004:#FF6347;
+	--daughterOf_004:#FF6347 ;
+	--mother_005:#6856ba;
+	--daughterOf_005:#6856ba;
+	--mother_006:#e66043;
+	--daughterOf_006:#e66043;
+	--mother_007:#23f74a;
+	--daughterOf_007:#23f74a;
+	--mother_008:#069420;
+	--daughterOf_008:#069420;
+	--mother_009:#543dba;
+	--daughterOf_009:#543dba;
+	--mother_010:#2102ad;
+	--daughterOf_010:#2102ad;
+	--mother_011:#2f7a3c;
+	--daughterOf_011:#2f7a3c;
+	--mother_012:#ff6f4f;
+	--daughterOf_012:#ff6f4f;
+	--mother_013:#065c16;
+	--daughterOf_013:#065c16;
+	--mother_014:#26913a;
+	--daughterOf_014:#26913a;
+	display:plg_table;
+	border-spacing:0.15em 2px;
+	width:auto;
+}
+.plg_table label {display:table-row;}
+.plg_table label>* {display:table-cell;width:max-content;}
+.plg_table label b:last-of-type {text-align:center;}
+.plg_table label.caption{display:table-caption;text-indent:1em;}
